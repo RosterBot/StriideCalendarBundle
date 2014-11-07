@@ -24,7 +24,10 @@ class Calendar extends \Eluceo\iCal\Component\Calendar
     parent::buildPropertyBag();
     $this->properties->set("x-WR-CALNAME",$this->name);
     $this->properties->set("X-WR-CALDESC",$this->description);
-    $this->properties->set("X-WR-TIMEZONE", $this->tz->getName() );
+    if($this->tz instanceof \DateTimeZone)
+    {
+      $this->properties->set("X-WR-TIMEZONE", $this->tz->getName() );
+    }
   }
   
   protected $parts = array();

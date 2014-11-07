@@ -52,7 +52,10 @@ class IcsService
 
     $vCalendar->setName($c->getName());
     $vCalendar->setDescription($c->getDescription());
-//    $vCalendar->setTimezone($c->getTimezone());
+    if($c->getTimezone() instanceof \DateTimeZone)
+    {
+        $vCalendar->setTimezone($c->getTimezone());
+    }
     $vCalendar->buildPropertyBag();
     
     $parts = $c->getParts();
@@ -92,8 +95,7 @@ class IcsService
         $vEvent->setUrl( $event->getUrl() );
       }
 
-      // Adding Timezone (optional)
-      $vEvent->setUseTimezone(false);
+        //todo add per-event timezones
 
       // 3. Add event to calendar
       $vCalendar->addEvent($vEvent);
