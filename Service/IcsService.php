@@ -11,7 +11,7 @@ class IcsService
   {
     $now = new \DateTime();
     $now->format("Y");
-    $v = new \vcalendar( array( 'unique_id' => $c->getGuid() ));
+    $v = new \vcalendar( [ 'unique_id' => $c->getGuid() ]);
     $v->setProperty( "x-wr-calname", $c->getName() );
     $v->setProperty( "X-WR-CALDESC", $c->getDescription() );
     $v->setProperty( "X-WR-TIMEZONE", $c->getTimezone()->getName() );
@@ -38,7 +38,7 @@ class IcsService
         $a = & $e->newComponent( 'valarm' );           // initiate ALARM
         $a->setProperty( 'action', 'DISPLAY' );                  // set what to do
         $a->setProperty( 'description', $a->getName() );          // describe alarm
-        $a->setProperty( 'trigger', array( $a->getWhenType() => $a->getWhenUnit() ));        // set trigger one week before
+        $a->setProperty( 'trigger', [ $a->getWhenType() => $a->getWhenUnit() ]);        // set trigger one week before
       }
     }
     return $v;
@@ -69,9 +69,10 @@ class IcsService
     
     // 2. Create an event
     // check if daylight or standard time....
-    foreach($c->getEvents() as $event)
+      /** @var Event $event */
+      foreach ($c->getEvents() as $event)
     {
-      $vEvent = new \Striide\CalendarBundle\Bridge\Event();
+      $vEvent = new \Striide\CalendarBundle\Bridge\Event($event->getGuid());
       $vEvent->setDtStart($event->getStartTime());
       $vEvent->setDtEnd($event->getEndTime());
       //$vEvent->setNoTime(true);

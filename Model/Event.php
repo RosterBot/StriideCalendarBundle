@@ -3,6 +3,18 @@ namespace Striide\CalendarBundle\Model;
 
 class Event
 {
+    private $guid = null;
+
+    public function setGuid($guid)
+    {
+        $this->guid = $guid;
+    }
+
+    public function getGuid()
+    {
+        return $this->guid;
+    }
+
   protected $name = "";
   public function getName()
   {
